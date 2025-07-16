@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Musical Instrument Store</title>
+
+  <!-- ✅ SEO Meta Tags -->
+  <meta name="description" content="Buy Indian musical instruments online – harmonium, tabla, dhol, guitar, benju, and more. Best prices and seller uploads.">
+  <meta name="keywords" content="musical store, buy harmonium online, tabla, dhol, benju, guitar, online music instruments india">
+  <meta name="author" content="Your Name or Company">
+
+  <!-- ✅ Social Media Preview -->
+  <meta property="og:title" content="Online Musical Instrument Store">
+  <meta property="og:description" content="Find all Indian and Western musical instruments in one place!">
+  <meta property="og:image" content="https://yourdomain.com/assets/guitar.jpg">
+  <meta property="og:url" content="https://yourdomain.com">
+
+  <style>
+    /* Same CSS as before (animations, layout, etc.) */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #2e3b55;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    main {
+      padding: 1em;
+    }
+    .category-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .category-card {
+      width: 200px;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .category-card:hover {
+      transform: scale(1.05);
+    }
+    .category-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      width: calc(33% - 40px);
+      float: left;
+      box-sizing: border-box;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      animation: fadeIn 0.4s ease-in;
+    }
+    .product:hover {
+      transform: scale(1.02);
+    }
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    #product-preview {
+      margin-top: 30px;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      animation: fadeInUp 0.5s ease-in;
+    }
+    #product-preview img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+    #product-section::after, #product-list::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .hidden {
+      display: none;
+    }
+    #back-btn {
+      margin-top: 20px;
+      background: #2e3b55;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎵 Musical Store</h1>
+  </header>
+
+  <main>
+    <div id="category-grid" class="category-grid"></div>
+
+    <div id="product-section" class="hidden">
+      <h2 id="category-title"></h2>
+      <div id="product-list"></div>
+      <button id="back-btn" onclick="goBack()">← Back to Categories</button>
+    </div>
+
+    <div id="product-preview" class="hidden"></div>
+  </main>
+
+  <script>
+    const categories = [
+      {
+        name: "Guitar",
+        image: "assets/guitar.jpg",
+        items: [
+          { name: "Acoustic Guitar", price: 5500, description: "Perfect for beginners.", image: "assets/guitar1.jpg" },
+          { name: "Electric Guitar", price: 9500, description: "Best for rock & metal.", image: "assets/guitar2.jpg" },
+          { name: "Bass Guitar", price: 8700, description: "Low-end punch and groove.", image: "assets/guitar3.jpg" }
+        ]
+      },
+      {
+        name: "Harmonium",
+        image: "assets/harmonium.jpg",
+        items: [
+          { name: "Basic Harmonium", price: 8500, description: "Ideal for learners.", image: "assets/harmonium.jpg" }
+        ]
+      },
+      {
+        name: "Tabla",
+        image: "assets/tabla.jpg",
+        items: [
+          { name: "Wooden Tabla", price: 5000, description: "Classic wooden finish.", image: "assets/tabla.jpg" }
+        ]
+      },
+      {
+        name: "Keyboard",
+        image: "assets/keyboard.jpg",
+        items: [
+          { name: "Yamaha Keyboard", price: 15000, description: "Professional sound.", image: "assets/keyboard.jpg" }
+        ]
+      },
+      {
+        name: "Dhol",
+        image: "assets/dhol.jpg",
+        items: [
+          { name: "Punjabi Dhol", price: 12000, description: "For bhangra beats.", image: "assets/dhol.jpg" }
+        ]
+      },
+      {
+        name: "Benju",
+        image: "assets/benju.jpg",
+        items: [
+          { name: "Traditional Benju", price: 7000, description: "Cultural string sound.", image: "assets/benju.jpg" }
+        ]
+      },
+      {
+        name: "Aarti Machine",
+        image: "assets/aarti.jpg",
+        items: [
+          { name: "Automatic Aarti", price: 9500, description: "For temples & homes.", image: "assets/aarti.jpg" }
+        ]
+      },
+      {
+        name: "School Drum Set",
+        image: "assets/school_drum.jpg",
+        items: [
+          { name: "Basic Drum Kit", price: 17000, description: "Perfect for schools.", image: "assets/school_drum.jpg" }
+        ]
+      },
+      {
+        name: "Roland Octo Pad",
+        image: "assets/octopad.jpg",
+        items: [
+          { name: "Roland Octapad SPD-30", price: 33000, description: "Legendary digital pad.", image: "assets/octopad.jpg" }
+        ]
+      }
+    ];
+
+    const categoryGrid = document.getElementById("category-grid");
+    const productSection = document.getElementById("product-section");
+    const productList = document.getElementById("product-list");
+    const categoryTitle = document.getElementById("category-title");
+    const productPreview = document.getElementById("product-preview");
+
+    function renderCategories() {
+      categoryGrid.innerHTML = "";
+      categories.forEach(category => {
+        const div = document.createElement("div");
+        div.className = "category-card";
+        div.onclick = () => showProducts(category);
+        div.innerHTML = `
+          <img src="${category.image}" alt="${category.name}" />
+          <h3>${category.name}</h3>
+        `;
+        categoryGrid.appendChild(div);
+      });
+    }
+
+    function showProducts(category) {
+      categoryGrid.classList.add("hidden");
+      productSection.classList.remove("hidden");
+      productPreview.classList.add("hidden");
+      categoryTitle.textContent = category.name;
+      productList.innerHTML = "";
+
+      category.items.forEach(item => {
+        const serial = "MS-" + Math.floor(100000 + Math.random() * 900000);
+        const div = document.createElement("div");
+        div.className = "product";
+        div.onclick = () => showPreview(item, serial);
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <h3>${item.name}</h3>
+          <p><strong>Price:</strong> ₹${item.price}</p>
+        `;
+        productList.appendChild(div);
+      });
+    }
+
+    function showPreview(item, serial) {
+      productPreview.classList.remove("hidden");
+      productPreview.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" />
+        <h2>${item.name}</h2>
+        <p><strong>Serial Number:</strong> ${serial}</p>
+        <p><strong>Price:</strong> ₹${item.price}</p>
+        <p><strong>Description:</strong><br>${item.description}</p>
+      `;
+      setTimeout(() => productPreview.scrollIntoView({ behavior: "smooth" }), 100);
+    }
+
+    function goBack() {
+      productSection.classList.add("hidden");
+      categoryGrid.classList.remove("hidden");
+      productPreview.classList.add("hidden");
+    }
+
+    renderCategories();
+  </script>
+</body>
+</html>
